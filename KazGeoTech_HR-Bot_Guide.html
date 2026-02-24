@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KazGeoTech HR-Bot — Руководство для HR-отдела</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --surface-2: #1a1a1a;
+    --border: #262626;
+    --text: #f5f5f5;
+    --text-muted: #888;
+    --text-dim: #555;
+    --accent: #00e676;
+    --accent-amber: #f59e0b;
+    --accent-red: #ef4444;
+    --accent-blue: #3b82f6;
+    --accent-purple: #a78bfa;
+    --whatsapp: #25d366;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HERO SECTION ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(ellipse at 30% 50%, rgba(0,230,118,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 80%, rgba(245,158,11,0.04) 0%, transparent 50%);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,230,118,0.08);
+    border: 1px solid rgba(0,230,118,0.2);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 40px;
+    animation: fadeInDown 0.8s ease;
+  }
+
+  .hero-title {
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1.05;
+    margin-bottom: 12px;
+    animation: fadeInUp 0.8s ease 0.2s both;
+  }
+
+  .hero-title .green { color: var(--accent); }
+  .hero-title .dim { color: var(--text-dim); font-weight: 300; }
+
+  .hero-subtitle {
+    font-size: clamp(18px, 2.5vw, 28px);
+    color: var(--text-muted);
+    font-weight: 300;
+    max-width: 700px;
+    margin: 0 auto 50px;
+    animation: fadeInUp 0.8s ease 0.4s both;
+  }
+
+  .hero-company {
+    font-size: 13px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 500;
+    animation: fadeInUp 0.8s ease 0.6s both;
+  }
+
+  .hero-company span { color: var(--accent-amber); }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    padding: 100px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--accent), transparent);
+    opacity: 0.3;
+  }
+
+  .section-title {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    margin-bottom: 24px;
+  }
+
+  .section-desc {
+    font-size: 17px;
+    color: var(--text-muted);
+    font-weight: 300;
+    max-width: 650px;
+    margin-bottom: 50px;
+  }
+
+  /* ===== CARDS ===== */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .card-grid.triple {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.3s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card:hover {
+    border-color: rgba(0,230,118,0.3);
+    transform: translateY(-2px);
+  }
+
+  .card-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+  }
+
+  .card-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .card.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .card.accent-border { border-left: 3px solid var(--accent); }
+  .card.amber-border { border-left: 3px solid var(--accent-amber); }
+  .card.red-border { border-left: 3px solid var(--accent-red); }
+  .card.blue-border { border-left: 3px solid var(--accent-blue); }
+
+  /* ===== FLOW / STEPS ===== */
+  .flow {
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .flow::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent-amber), var(--accent-blue));
+    border-radius: 2px;
+  }
+
+  .flow-step {
+    position: relative;
+    margin-bottom: 40px;
+    padding: 28px 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  .flow-step::before {
+    content: attr(data-step);
+    position: absolute;
+    left: -40px;
+    top: 28px;
+    width: 32px;
+    height: 32px;
+    background: var(--accent);
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    z-index: 1;
+  }
+
+  .flow-step-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .flow-step-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.8;
+  }
+
+  /* ===== RULES BLOCKS ===== */
+  .rule-block {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .rule-block:last-child { border-bottom: none; }
+
+  .rule-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    background: var(--surface);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .rule-content { flex: 1; }
+
+  .rule-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .rule-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ===== HIGHLIGHT BOX ===== */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(0,230,118,0.06), rgba(0,230,118,0.02));
+    border: 1px solid rgba(0,230,118,0.15);
+    border-radius: 16px;
+    padding: 32px;
+    margin: 40px 0;
+  }
+
+  .highlight-box.amber {
+    background: linear-gradient(135deg, rgba(245,158,11,0.06), rgba(245,158,11,0.02));
+    border-color: rgba(245,158,11,0.15);
+  }
+
+  .highlight-box.red {
+    background: linear-gradient(135deg, rgba(239,68,68,0.06), rgba(239,68,68,0.02));
+    border-color: rgba(239,68,68,0.15);
+  }
+
+  .highlight-box.blue {
+    background: linear-gradient(135deg, rgba(59,130,246,0.06), rgba(59,130,246,0.02));
+    border-color: rgba(59,130,246,0.15);
+  }
+
+  .highlight-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .highlight-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ===== SCHEMA / DIAGRAM ===== */
+  .schema {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0;
+  }
+
+  .schema-node {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 22px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .schema-node.active {
+    border-color: var(--accent);
+    background: rgba(0,230,118,0.06);
+    color: var(--accent);
+  }
+
+  .schema-arrow {
+    color: var(--text-dim);
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  /* ===== TABLE-LIKE ===== */
+  .info-row {
+    display: flex;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 20px;
+    align-items: baseline;
+  }
+
+  .info-row:last-child { border-bottom: none; }
+
+  .info-label {
+    min-width: 180px;
+    font-size: 13px;
+    color: var(--text-dim);
+    font-weight: 400;
+  }
+
+  .info-value {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 400;
+    flex: 1;
+  }
+
+  /* ===== LINK BUTTON ===== */
+  .link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent);
+    color: #000;
+    padding: 14px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin: 8px 8px 8px 0;
+  }
+
+  .link-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,230,118,0.2);
+  }
+
+  .link-btn.amber {
+    background: var(--accent-amber);
+  }
+
+  .link-btn.amber:hover {
+    box-shadow: 0 8px 30px rgba(245,158,11,0.2);
+  }
+
+  .link-btn.outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .link-btn.outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 8px 30px rgba(0,230,118,0.1);
+  }
+
+  /* ===== COLUMNS ===== */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin: 40px 0;
+  }
+
+  .col-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ===== TAG / BADGE ===== */
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .tag.green { background: rgba(0,230,118,0.1); color: var(--accent); }
+  .tag.amber { background: rgba(245,158,11,0.1); color: var(--accent-amber); }
+  .tag.red { background: rgba(239,68,68,0.1); color: var(--accent-red); }
+  .tag.blue { background: rgba(59,130,246,0.1); color: var(--accent-blue); }
+
+  /* ===== SEPARATOR ===== */
+  .sep {
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(to right, var(--accent), var(--accent-amber));
+    border-radius: 3px;
+    margin: 60px 0;
+  }
+
+  /* ===== MONO CODE ===== */
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--surface);
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    padding: 60px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .footer-text {
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .container { padding: 0 24px; }
+    .card-grid, .card-grid.triple, .two-col { grid-template-columns: 1fr; }
+    .hero { padding: 40px 24px; }
+    .section { padding: 60px 0; }
+    .info-row { flex-direction: column; gap: 4px; }
+    .info-label { min-width: auto; }
+  }
+
+  /* ===== SCREENSHOT MOCK ===== */
+  .phone-mock {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 20px;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  .phone-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .phone-avatar {
+    width: 36px;
+    height: 36px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  .phone-name {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .phone-status {
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  .chat-bubble {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  .chat-bubble.bot {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-bottom-left-radius: 4px;
+    margin-right: auto;
+  }
+
+  .chat-bubble.user {
+    background: rgba(0,230,118,0.12);
+    border: 1px solid rgba(0,230,118,0.2);
+    border-bottom-right-radius: 4px;
+    margin-left: auto;
+  }
+
+  /* ===== NUMBER COUNTER ===== */
+  .stat-row {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    margin: 50px 0;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -2px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 8px;
+    font-weight: 500;
+  }
+
+  /* print-friendly */
+  @media print {
+    body { background: #fff; color: #111; }
+    .hero { min-height: auto; background: none; }
+    .card, .flow-step { border-color: #ddd; background: #f9f9f9; }
+    .section { border-color: #ddd; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ====== HERO ====== -->
+<div class="hero">
+  <div class="hero-badge">📋 Руководство для HR-отдела</div>
+  <h1 class="hero-title">
+    <span class="green">KazGeoTech</span><br>
+    <span class="dim">HR-Bot</span>
+  </h1>
+  <p class="hero-subtitle">Полное руководство по работе с ИИ-ассистентом по подбору персонала через WhatsApp</p>
+  <p class="hero-company">KazGeoTech · <span>Геологоразведка и геотехнические изыскания</span></p>
+</div>
+
+<!-- ====== SECTION 1: ЧТО ЭТО ====== -->
+<div class="section">
+  <div class="container">
+    <div class="section-label">01 — Обзор системы</div>
+    <h2 class="section-title">Что такое KazGeoTech HR-Bot?</h2>
+    <p class="section-desc">ИИ-ассистент «Абай» — виртуальный HR-менеджер, который общается с кандидатами через WhatsApp 24/7. Он проводит первичный скрининг, собирает данные, задаёт технические вопросы и передаёт готовые анкеты вам на почту.</p>
+
+    <div class="stat-row">
+      <div class="stat-item">
+        <div class="stat-number">24/7</div>
+        <div class="stat-label">Работает без перерывов</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">3</div>
+        <div class="stat-label">Языка (рус, қаз, eng)</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">~5 мин</div>
+        <div class="stat-label">Среднее время анкеты</div>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="card accent-border">
+        <span class="card-icon">🤖</span>
+        <h3 class="card-title">Автоматический скрининг</h3>
+        <p class="card-text">Бот приветствует кандидата, показывает актуальные вакансии, задаёт вопросы по квалификации и технические вопросы — всё по данным из Google Таблицы.</p>
+      </div>
+      <div class="card amber-border">
+        <span class="card-icon">📩</span>
+        <h3 class="card-title">Готовые анкеты на почту</h3>
+        <p class="card-text">Когда кандидат прошёл все этапы, вы получаете красиво оформленное письмо с полными данными, ответами на вопросы и ссылкой на резюме на <span class="mono">cv@kazgeotech.kz</span>.</p>
+      </div>
+      <div class="card blue-border">
+        <span class="card-icon">📊</span>
+        <h3 class="card-title">Данные в Google Таблице</h3>
+        <p class="card-text">Каждый кандидат автоматически записывается в Google Sheets — «Заявки» или «Резерв». Все данные структурированы и доступны для анализа.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon">💬</span>
+        <h3 class="card-title">Живое общение</h3>
+        <p class="card-text">Бот общается как настоящий HR-менеджер — с эмодзи, вариативными фразами, без канцелярита. Кандидаты часто не замечают, что общаются с ИИ.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 2: ВОРОНКА ====== -->
+<div class="section">
+  <div class="container">
+    <div class="section-label">02 — Как работает бот</div>
+    <h2 class="section-title">Воронка кандидата</h2>
+    <p class="section-desc">Бот проводит каждого кандидата через 8 последовательных этапов — от приветствия до готовой анкеты в вашем почтовом ящике.</p>
+
+    <div class="flow">
+      <div class="flow-step" data-step="1">
+        <h4 class="flow-step-title">👋 Приветствие (greeting)</h4>
+        <p class="flow-step-text">Кандидат пишет в WhatsApp. Бот здоровается, предлагает выбор языка (русский / қазақша). Если кандидат сразу написал развёрнуто — бот автоматически определяет язык.</p>
+      </div>
+      <div class="flow-step" data-step="2">
+        <h4 class="flow-step-title">📋 Выбор вакансии (vacancy_selection)</h4>
+        <p class="flow-step-text">Бот загружает актуальные позиции из Google Таблицы и показывает список. Кандидат выбирает номер. Бот рассказывает о позиции: зарплата, график, место работы, обязанности.</p>
+      </div>
+      <div class="flow-step" data-step="3">
+        <h4 class="flow-step-title">✅ Квалификация (qualification)</h4>
+        <p class="flow-step-text">Бот спрашивает: ФИО, возраст, город, образование, стаж, водительские права, гражданство, зарплатные ожидания и другие требования по позиции.</p>
+      </div>
+      <div class="flow-step" data-step="4">
+        <h4 class="flow-step-title">🔧 Техническое интервью (screening)</h4>
+        <p class="flow-step-text">Бот задаёт технические вопросы из таблицы — по одному за раз. Это позволяет оценить глубину знаний кандидата ещё до живого собеседования.</p>
+      </div>
+      <div class="flow-step" data-step="5">
+        <h4 class="flow-step-title">📄 Запрос резюме (resume_request)</h4>
+        <p class="flow-step-text">Бот просит кандидата отправить резюме файлом. Может принимать PDF, фото документа. Текст резюме автоматически извлекается и сохраняется.</p>
+      </div>
+      <div class="flow-step" data-step="6">
+        <h4 class="flow-step-title">💬 Дополнительная информация (cover_message)</h4>
+        <p class="flow-step-text">Бот спрашивает, есть ли что-то важное, что кандидат хотел бы добавить (мотивация, особые обстоятельства, вопросы).</p>
+      </div>
+      <div class="flow-step" data-step="7">
+        <h4 class="flow-step-title">📝 Сводка (summary)</h4>
+        <p class="flow-step-text">Бот показывает кандидату сводку всех собранных данных для проверки. Кандидат подтверждает или просит исправить.</p>
+      </div>
+      <div class="flow-step" data-step="8">
+        <h4 class="flow-step-title">🎉 Завершение (complete)</h4>
+        <p class="flow-step-text">Анкета отправляется: письмо на cv@kazgeotech.kz + строка в Google Таблицу (лист «Заявки» или «Резерв»). Кандидат получает сообщение, что его данные переданы в HR-отдел.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 3: GOOGLE SHEETS ====== -->
+<div class="section">
+  <div class="container">
+    <div class="section-label">03 — Google Таблица</div>
+    <h2 class="section-title">Как устроена таблица</h2>
+    <p class="section-desc">Google Таблица — центральный хаб системы. Она хранит вакансии и собирает все данные кандидатов.</p>
+
+    <a href="https://docs.google.com/spreadsheets/d/19c9o3t0qTo_N881Jc6KMN83q9atv7Mq4BKrnq7-l1yc/edit?gid=947733853#gid=947733853" class="link-btn" target="_blank">📊 Открыть Google Таблицу →</a>
+
+    <div class="sep"></div>
+
+    <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 24px;">Листы таблицы</h3>
+
+    <div class="card-grid triple">
+      <div class="card accent-border">
+        <div class="tag green" style="margin-bottom: 12px;">Лист 1</div>
+        <h3 class="card-title">📌 Позиции</h3>
+        <p class="card-text">Все вакансии компании. Бот читает этот лист и показывает кандидатам только те, где колонка «Актуальна ли вакансия» = «Да». Здесь же лежат вопросы для технического интервью.</p>
+      </div>
+      <div class="card amber-border">
+        <div class="tag amber" style="margin-bottom: 12px;">Лист 2</div>
+        <h3 class="card-title">📥 Заявки</h3>
+        <p class="card-text">Сюда попадают кандидаты, которые подходят по требованиям вакансии. Это основные заявки, которые вам нужно обработать. Каждая строка — один кандидат с полными данными.</p>
+      </div>
+      <div class="card blue-border">
+        <div class="tag blue" style="margin-bottom: 12px;">Лист 3</div>
+        <h3 class="card-title">📂 Резерв</h3>
+        <p class="card-text">Кандидаты, которые не полностью соответствуют требованиям, но потенциально интересны. Например, недостаточный стаж, не подходит город. Их можно рассмотреть позже.</p>
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 24px;">Что содержит лист «Позиции»</h3>
+    <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px; font-weight: 300;">Каждая строка — одна вакансия. Основные колонки:</p>
+
+    <div class="info-row"><span class="info-label">Позиция</span><span class="info-value">Название вакансии (бот показывает этот текст кандидатам)</span></div>
+    <div class="info-row"><span class="info-label">Кол-во мест</span><span class="info-value">Сколько людей нужно на эту позицию</span></div>
+    <div class="info-row"><span class="info-label">Место работы</span><span class="info-value">Локация (например, «Все месторождения по Западному Казахстану»)</span></div>
+    <div class="info-row"><span class="info-label">Зарплата мин / макс</span><span class="info-value">Зарплатная вилка (после вычета налогов). Бот озвучивает это кандидату</span></div>
+    <div class="info-row"><span class="info-label">Актуальна ли вакансия</span><span class="info-value">«Да» или «Нет» — бот показывает только актуальные</span></div>
+    <div class="info-row"><span class="info-label">Требования</span><span class="info-value">Образование, стаж, возраст, гражданство, права и т.д.</span></div>
+    <div class="info-row"><span class="info-label">Описание позиции</span><span class="info-value">Обязанности — бот рассказывает это кандидату при выборе</span></div>
+    <div class="info-row"><span class="info-label">Технические вопросы</span><span class="info-value">Вопросы для скрининга — бот задаёт их по одному</span></div>
+    <div class="info-row"><span class="info-label">Нетехнические вопросы</span><span class="info-value">Личные вопросы (спорт, курение, сильные стороны)</span></div>
+
+    <div class="highlight-box">
+      <div class="highlight-title">💡 Важно: таблица — динамическая</div>
+      <p class="highlight-text">Вы можете добавлять новые колонки, менять названия, добавлять новые вопросы — бот автоматически адаптируется. Он анализирует данные с нуля при каждом обращении. Чтобы убрать вакансию — поставьте «Нет» в колонке «Актуальна ли вакансия».</p>
+    </div>
+
+    <div class="sep"></div>
+
+    <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 24px;">Что содержит лист «Заявки» / «Резерв»</h3>
+    <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px; font-weight: 300;">Когда бот завершает диалог, он записывает строку с данными кандидата:</p>
+
+    <div class="info-row"><span class="info-label">Дата</span><span class="info-value">Дата и время завершения анкеты</span></div>
+    <div class="info-row"><span class="info-label">Номер</span><span class="info-value">Порядковый номер заявки</span></div>
+    <div class="info-row"><span class="info-label">ФИО, Возраст, Город</span><span class="info-value">Базовые данные кандидата</span></div>
+    <div class="info-row"><span class="info-label">Вакансия</span><span class="info-value">На какую позицию подавался</span></div>
+    <div class="info-row"><span class="info-label">Опыт, Образование</span><span class="info-value">Профессиональные данные</span></div>
+    <div class="info-row"><span class="info-label">Зарплата</span><span class="info-value">Зарплатные ожидания кандидата</span></div>
+    <div class="info-row"><span class="info-label">Резюме / Резюме URL</span><span class="info-value">Статус резюме и ссылка на скачивание</span></div>
+    <div class="info-row"><span class="info-label">Тех. ответы</span><span class="info-value">Ответы на технические вопросы скрининга</span></div>
+    <div class="info-row"><span class="info-label">Full Data</span><span class="info-value">Полный JSON со всеми собранными данными</span></div>
+    <div class="info-row"><span class="info-label">Summary</span><span class="info-value">Краткая сводка от бота — что обсуждали, результат, предупреждения ⚠️</span></div>
+    <div class="info-row"><span class="info-label">WhatsApp</span><span class="info-value">Прямая ссылка для связи с кандидатом</span></div>
+  </div>
+</div>
+
+<!-- ====== SECTION 4: EMAIL ====== -->
+<div class="section">
+  <div class="container">
+    <div class="section-label">04 — Уведомления на почту</div>
+    <h2 class="section-title">Как выглядят письма</h2>
+    <p class="section-desc">Каждый раз, когда кандидат завершает анкету, система автоматически отправляет красиво оформленное письмо на <span class="mono">cv@kazgeotech.kz</span>.</p>
+
+    <div class="card-grid">
+      <div class="card accent-border">
+        <div class="tag green" style="margin-bottom: 12px;">Основная заявка</div>
+        <h3 class="card-title">📧 ЗАЯВКА #12 — Геолог — Иванов Пётр</h3>
+        <p class="card-text">Приходит, когда кандидат соответствует требованиям. Тема письма начинается со слова «ЗАЯВКА». Зелёная цветовая схема. Содержит все данные, квалификацию, ответы на вопросы, ссылку на резюме и кнопку «Написать в WhatsApp».</p>
+      </div>
+      <div class="card amber-border">
+        <div class="tag amber" style="margin-bottom: 12px;">Кадровый резерв</div>
+        <h3 class="card-title">📧 РЕЗЕРВ #5 — Механик — Серик Б.</h3>
+        <p class="card-text">Приходит, когда кандидат не полностью соответствует. Тема начинается со слова «РЕЗЕРВ». Жёлтая (amber) цветовая схема. Те же данные, но кандидат отмечен как резервный.</p>
+      </div>
+    </div>
+
+    <h3 style="font-size: 18px; font-weight: 700; margin: 40px 0 20px;">Что содержит письмо:</h3>
+
+    <div class="rule-block">
+      <div class="rule-icon">👤</div>
+      <div class="rule-content">
+        <div class="rule-title">Личные данные</div>
+        <div class="rule-desc">ФИО, возраст, город, телефон, email, ссылка на WhatsApp</div>
+      </div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-icon">📊</div>
+      <div class="rule-content">
+        <div class="rule-title">Квалификация</div>
+        <div class="rule-desc">Опыт работы, образование, водительские права, зарплатные ожидания, готовность к командировкам</div>
+      </div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-icon">🔧</div>
+      <div class="rule-content">
+        <div class="rule-title">Технические ответы</div>
+        <div class="rule-desc">Развёрнутые ответы на технические вопросы (если позиция техническая)</div>
+      </div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-icon">📄</div>
+      <div class="rule-content">
+        <div class="rule-title">Резюме</div>
+        <div class="rule-desc">Статус (получено / не получено) + ссылка «Скачать» если резюме прикреплено</div>
+      </div>
+    </div>
+    <div class="rule-block">
+      <div class="rule-icon">💬</div>
+      <div class="rule-content">
+        <div class="rule-title">Кнопка WhatsApp</div>
+        <div class="rule-desc">В конце каждого письма — кнопка для быстрой связи с кандидатом через WhatsApp</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 5: ЧТО МОЖНО ====== -->
+<div class="section">
+  <div class="container">
+    <div class="section-label">05 — Правила работы</div>
+    <h2 class="section-title">Что можно, нельзя и нужно</h2>
+
+    <div class="two-col">
+      <div>
+        <div class="col-title" style="color: var(--accent);">✅ ЧТО МОЖНО И НУЖНО</div>
+        <div class="rule-block">
+          <div class="rule-icon">📋</div>
+          <div class="rule-content">
+            <div class="rule-title">Редактировать вакансии в таблице</div>
+            <div class="rule-desc">Менять описания, зарплаты, требования, добавлять новые вопросы. Бот подхватит изменения автоматически.</div>
+          </div>
+        </div>
+        <div class="rule-block">
+          <div class="rule-icon">🟢</div>
+          <div class="rule-content">
+            <div class="rule-title">Включать / выключать вакансии</div>
+            <div class="rule-desc">Колонка «Актуальна ли вакансия» — ставьте «Да» или «Нет».</div>
+          </div>
+        </div>
+        <div class="rule-block">
+          <div class="rule-icon">📞</div>
+          <div class="rule-content">
+            <div class="rule-title">Связываться с кандидатами</div>
+            <div class="rule-desc">Через ссылку WhatsApp в таблице или письме. Звоните или пишите.</div>
+          </div>
+        </div>
+        <div class="rule-block">
+          <div class="rule-icon">➕</div>
+          <div class="rule-content">
+            <div class="rule-title">Добавлять новые вакансии</div>
+            <div class="rule-desc">Просто добавьте новую строку на лист «Позиции» с заполненными колонками.</div>
+          </div>
+        </div>
+        <div class="rule-block">
+          <div class="rule-icon">📊</div>
+          <div class="rule-content">
+            <div class="rule-title">Просматривать и фильтровать данные</div>
+            <div class="rule-desc">Листы «Заявки» и «Резерв» можно фильтровать, сортировать, делать сводные таблицы.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="col-title" style="color: var(--accent-red);">🚫 ЧТО НЕЛЬЗЯ</div>
+        <div class="rule-block">
+          <div class="rule-icon" style="border-color: rgba(239,68,68,0.3);">⛔</div>
+          <div class="rule-content">
+            <div class="rule-title">Писать клиенту в чат, где работает бот</div>
+            <div class="rule-desc">Любое ваше сообщение в чат с кандидатом мгновенно отключает бота в этом чате навсегда.</div>
+          </div>
+        </div>
+        <div class="rule-block">
+          <div class="rule-icon" style="border-color: rgba(239,68,68,0.3);">⛔</div>
+          <div class="rule-content">
+            <div class="rule-title">Удалять колонки на листе «Позиции»</div>
+            <div class="rule-desc">Если колонка вам не нужна — оставьте её пустой. Удаление может сломать логику бота.</div>
+          </div>
+        </div>
+        <div class="rule-block">
+          <div class="rule-icon" style="border-color: rgba(239,68,68,0.3);">⛔</div>
+          <div class="rule-content">
+            <div class="rule-title">Удалять или переименовывать листы</div>
+            <div class="rule-desc">Листы «Позиции», «Заявки», «Резерв» — системные. Их структура не должна меняться.</div>
+          </div>
+        </div>
+        <div class="rule-block">
+          <div class="rule-icon" style="border-color: rgba(239,68,68,0.3);">⛔</div>
+          <div class="rule-content">
+            <div class="rule-title">Менять строку заголовков на листах «Заявки» / «Резерв»</div>
+            <div class="rule-desc">Первая строка (заголовки) — техническая. Изменение сломает запись данных.</div>
+          </div>
+        </div>
+        <div class="rule-block">
+          <div class="rule-icon" style="border-color: rgba(239,68,68,0.3);">⛔</div>
+          <div class="rule-content">
+            <div class="rule-title">Выходить из WhatsApp (Log Out)</div>
+            <div class="rule-desc">Это разрывает связь бота. Требуется повторная привязка через QR-код.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box red">
+      <div class="highlight-title" style="color: var(--accent-red);">⚠️ Главное правило</div>
+      <p class="highlight-text">Если вы хотите связаться с кандидатом — <strong>звоните ему</strong>, не пишите в чат WhatsApp. Любое ваше текстовое сообщение в чате отключает бота для этого кандидата. Если кандидат не взял трубку — не пишите, дождитесь, пока бот продолжит диалог.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 6: ЕЖЕДНЕВНЫЕ ОБЯЗАННОСТИ ====== -->
+<div class="section">
+  <div class="container">
+    <div class="section-label">06 — Ежедневная рутина</div>
+    <h2 class="section-title">Что делать каждый день</h2>
+
+    <div class="card-grid">
+      <div class="card full-width" style="background: linear-gradient(135deg, var(--surface), rgba(0,230,118,0.03));">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <div>
+            <h3 class="card-title" style="margin-bottom: 20px;">📱 Обеспечить работу бота</h3>
+            <div class="rule-block" style="padding: 12px 0; border-color: var(--border);">
+              <div class="rule-content">
+                <div class="rule-desc">✔ Телефон с WhatsApp включён 24/7 и на зарядке</div>
+              </div>
+            </div>
+            <div class="rule-block" style="padding: 12px 0; border-color: var(--border);">
+              <div class="rule-content">
+                <div class="rule-desc">✔ Стабильный интернет (Wi-Fi или мобильные данные)</div>
+              </div>
+            </div>
+            <div class="rule-block" style="padding: 12px 0; border-color: var(--border);">
+              <div class="rule-content">
+                <div class="rule-desc">✔ WhatsApp обновлён до последней версии</div>
+              </div>
+            </div>
+            <div class="rule-block" style="padding: 12px 0; border-color: var(--border);">
+              <div class="rule-content">
+                <div class="rule-desc">✔ Авиарежим НЕ включён</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 class="card-title" style="margin-bottom: 20px;">📨 Обработка заявок</h3>
+            <div class="rule-block" style="padding: 12px 0; border-color: var(--border);">
+              <div class="rule-content">
+                <div class="rule-desc">✔ Проверить почту cv@kazgeotech.kz на новые анкеты</div>
+              </div>
+            </div>
+            <div class="rule-block" style="padding: 12px 0; border-color: var(--border);">
+              <div class="rule-content">
+                <div class="rule-desc">✔ Просмотреть новые строки в таблице «Заявки»</div>
+              </div>
+            </div>
+            <div class="rule-block" style="padding: 12px 0; border-color: var(--border);">
+              <div class="rule-content">
+                <div class="rule-desc">✔ Связаться с подходящими кандидатами (по телефону!)</div>
+              </div>
+            </div>
+            <div class="rule-block" style="padding: 12px 0; border-bottom: none;">
+              <div class="rule-content">
+                <div class="rule-desc">✔ Утром проверить — бот отвечает на входящие сообщения</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 7: ЧТО ДЕЛАТЬ ЕСЛИ НЕ РАБОТАЕТ ====== -->
+<div class="section">
+  <div class="container">
+    <div class="section-label">07 — Устранение проблем</div>
+    <h2 class="section-title">Если бот не работает</h2>
+    <p class="section-desc">Привязка занимает 1 минуту. Вы можете сделать это самостоятельно.</p>
+
+    <div class="flow">
+      <div class="flow-step" data-step="1">
+        <h4 class="flow-step-title">Проверьте базовое</h4>
+        <p class="flow-step-text">Телефон включён? Интернет есть? WhatsApp открыт и обновлён? Авиарежим выключен?</p>
+      </div>
+      <div class="flow-step" data-step="2">
+        <h4 class="flow-step-title">Откройте ссылку для привязки</h4>
+        <p class="flow-step-text">Перейдите по ссылке ниже. Нажмите кнопку «Get QR» на открывшейся странице.</p>
+      </div>
+      <div class="flow-step" data-step="3">
+        <h4 class="flow-step-title">Отсканируйте QR-код</h4>
+        <p class="flow-step-text">Откройте WhatsApp → Настройки → Связанные устройства → Привязать устройство. Отсканируйте QR-код с экрана.</p>
+      </div>
+      <div class="flow-step" data-step="4">
+        <h4 class="flow-step-title">Не помогло?</h4>
+        <p class="flow-step-text">Свяжитесь с Ернаром — ответственным за ИИ-систему.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 40px;">
+      <a href="https://qr.green-api.com/waInstance7105524871/ff366fd62c234f7fa9d855d1c3165ee28dd7977f8c1e467f86" class="link-btn" target="_blank">🔗 Ссылка для привязки QR →</a>
+    </div>
+
+    <div class="highlight-box amber" style="margin-top: 40px;">
+      <div class="highlight-title" style="color: var(--accent-amber);">📱 Нет доступа к телефону?</div>
+      <p class="highlight-text">Если у вас нет физического доступа к телефону, с которого нужно отсканировать QR — сообщите о проблеме в рабочую группу, чтобы тот, у кого есть доступ к телефону, отсканировал QR-код.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 8: ОШИБКИ И ЖАЛОБЫ ====== -->
+<div class="section">
+  <div class="container">
+    <div class="section-label">08 — Обратная связь</div>
+    <h2 class="section-title">Если бот ошибается</h2>
+    <p class="section-desc">Бот обучается и улучшается на основе обратной связи. Если вы видите ошибку или клиент жалуется — не игнорируйте.</p>
+
+    <div class="card-grid">
+      <div class="card accent-border">
+        <span class="card-icon">📝</span>
+        <h3 class="card-title">Зафиксируйте проблему</h3>
+        <p class="card-text">Запишите: что именно бот сказал / не сказал, какой был контекст, что ожидал кандидат. Чем подробнее — тем быстрее исправим.</p>
+      </div>
+      <div class="card amber-border">
+        <span class="card-icon">📢</span>
+        <h3 class="card-title">Сообщите Ернару</h3>
+        <p class="card-text">Передайте описание ошибки ответственному за ИИ (Ернар). Он внесёт корректировку в промпт, и бот больше не будет повторять эту ошибку.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 9: БЫСТРАЯ СПРАВКА ====== -->
+<div class="section">
+  <div class="container">
+    <div class="section-label">09 — Быстрая справка</div>
+    <h2 class="section-title">Ключевые ссылки</h2>
+
+    <div style="margin: 30px 0;">
+      <a href="https://docs.google.com/spreadsheets/d/19c9o3t0qTo_N881Jc6KMN83q9atv7Mq4BKrnq7-l1yc/edit?gid=947733853#gid=947733853" class="link-btn" target="_blank">📊 Google Таблица (Позиции & Заявки)</a>
+      <a href="https://qr.green-api.com/waInstance7105524871/ff366fd62c234f7fa9d855d1c3165ee28dd7977f8c1e467f86" class="link-btn amber" target="_blank">🔗 Привязка QR-кода</a>
+    </div>
+
+    <div class="sep"></div>
+
+    <div class="highlight-box blue">
+      <div class="highlight-title" style="color: var(--accent-blue);">📌 Памятка: что запомнить</div>
+      <p class="highlight-text">
+        <strong>1.</strong> Бот работает автоматически — ваша задача обрабатывать готовые анкеты, а не вмешиваться в диалоги.<br>
+        <strong>2.</strong> Вакансии управляются через Google Таблицу — колонка «Актуальна ли вакансия» включает/выключает позиции.<br>
+        <strong>3.</strong> Анкеты приходят на cv@kazgeotech.kz и дублируются в таблицу.<br>
+        <strong>4.</strong> Не пишите в чат с кандидатом — только звоните.<br>
+        <strong>5.</strong> Если бот молчит — привяжите по QR (1 минута).<br>
+        <strong>6.</strong> Ошибки бота → сообщайте Ернару.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ====== FOOTER ====== -->
+<div class="footer">
+  <div class="container">
+    <p class="footer-text" style="margin-bottom: 8px;">KazGeoTech HR-Bot · Руководство v1.0</p>
+    <p class="footer-text">Ответственный за систему: Ернар · При вопросах обращайтесь напрямую</p>
+  </div>
+</div>
+
+</body>
+</html>
